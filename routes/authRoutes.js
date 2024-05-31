@@ -7,14 +7,12 @@ const router = express.Router();
 
 router.post("/register", async (req, res) => {
   try {
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     const user = new User({ email: req.body.email, password: hashedPassword });
 
     await user.save();
     return res.sendStatus(201);
-
   } catch (err) {
     return res.sendStatus(400);
   }
@@ -28,7 +26,7 @@ router.post("/login", async (req, res) => {
   }
 
   const expiresIn = 30 * 60; // 30 minutes in seconds
-  
+
   const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
     expiresIn,
   });
