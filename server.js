@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 app.use('/auth', authRoutes);
 
-mongoose.connect("mongodb://localhost:27017/OMS");
+mongoose.connect(process.env.DB_CONNECT);
 
 app.get("/protected", authMiddleware, (req, res) => {
   res.send("This is a protected route");
